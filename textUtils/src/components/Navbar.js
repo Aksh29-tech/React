@@ -1,7 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function Navbar({title, aboutText = 'About'}) {
+export default function Navbar(props) {
+    // Defensive: props may be undefined in some HMR/runtime edge cases.
+    // Destructure from props with a fallback object so we never throw.
+    const { title = 'Set title here', aboutText = 'About' } = props || {};
+    // Quick debug to inspect what's actually being passed at runtime.
+    // Remove or comment out this console.log in production.
+    // eslint-disable-next-line no-console
+    console.log('Navbar props:', props);
+
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
@@ -32,7 +40,7 @@ export default function Navbar({title, aboutText = 'About'}) {
 
 // PropTypes is used to enforce the type of props passed to the component
 Navbar.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     aboutText: PropTypes.string
 }
 
